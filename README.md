@@ -1,7 +1,7 @@
 # Ubuntu Preseed ISO Generator
 Generate an ISO image for automated Ubuntu 20.04 desktop installations. This script uses the traditional preseed method.
 
-## Looking for the server version?
+## [Looking for the server version?](https://github.com/covertsh/ubuntu-autoinstall-generator)
 
 ### Behavior
 
@@ -47,7 +47,8 @@ Available options:
 user@testbox:~$ bash ubuntu-preseed-iso-generator.sh -p example.seed -d ubuntu-preseed-example.iso
 [2021-03-13 10:05:10] 👶 Starting up...
 [2021-03-13 10:05:10] 📁 Created temporary working directory /tmp/tmp.rrehvj78Bk
-[2021-03-13 10:05:10] 🔎 Checking for required utilities...                                                                                                                     [2021-03-13 10:05:10] 👍 All required utilities are installed.
+[2021-03-13 10:05:10] 🔎 Checking for required utilities...
+[2021-03-13 10:05:10] 👍 All required utilities are installed.
 [2020-12-23 14:06:07] 🌎 Downloading current daily ISO image for Ubuntu 20.04 Focal Fossa...
 [2020-12-23 14:08:01] 👍 Downloaded and saved to /home/user/ubuntu-original-2021-03-13.iso
 [2020-12-23 14:08:01] 🌎 Downloading SHA256SUMS & SHA256SUMS.gpg files...
@@ -63,7 +64,8 @@ user@testbox:~$ bash ubuntu-preseed-iso-generator.sh -p example.seed -d ubuntu-p
 [2021-03-13 10:05:23] 👍 Added preseed file
 [2021-03-13 10:05:23] 👷 Updating /tmp/tmp.rrehvj78Bk/md5sum.txt with hashes of modified files...
 [2021-03-13 10:05:23] 👍 Updated hashes.
-[2021-03-13 10:05:23] 📦 Repackaging extracted files into an ISO image...                                                                                                       [2021-03-13 10:05:35] 👍 Repackaged into /home/user/ubuntu-preseed-example.iso
+[2021-03-13 10:05:23] 📦 Repackaging extracted files into an ISO image...
+[2021-03-13 10:05:35] 👍 Repackaged into /home/user/ubuntu-preseed-example.iso
 [2021-03-13 10:05:35] ✅ Completed.
 [2021-03-13 10:05:35] 🚽 Deleted temporary working directory /tmp/tmp.rrehvj78Bk
 ```
