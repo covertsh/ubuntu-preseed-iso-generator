@@ -44,7 +44,7 @@ d-i passwd/username string user
 d-i passwd/user-password-crypted password $6$eRzcYyR3Xw2elP6l$l7JXHXxbXRgD8KCx4xFt4q7aJFpsUfjjMHbfYZAlJ56GLSspojJ6ODxlauuauL72jYbwhEhGwUmzgImIVCFle0
 d-i passwd/user-default-groups string adm audio cdrom dip lpadmin sudo plugdev sambashare video
 d-i passwd/root-login boolean false
-d-i user-setup/allow-password-weak boolean flase
+d-i user-setup/allow-password-weak boolean false
 
 # Grub
 d-i grub-installer/grub2_instead_of_grub_legacy boolean true
