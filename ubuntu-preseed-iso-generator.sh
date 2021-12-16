@@ -109,11 +109,11 @@ else
 fi
 
 log "🔎 Checking for required utilities..."
-[[ ! -x "$(command -v 7z)" ]] && die "💥 7z is not installed."
+[[ ! -x "$(command -v xorriso)" ]] && die "💥 xorriso is not installed."
 [[ ! -x "$(command -v sed)" ]] && die "💥 sed is not installed."
 [[ ! -x "$(command -v curl)" ]] && die "💥 curl is not installed."
-[[ ! -x "$(command -v mkisofs)" ]] && die "💥 mkisofs is not installed."
 [[ ! -x "$(command -v gpg)" ]] && die "💥 gpg is not installed."
+[[ ! -f "/usr/lib/ISOLINUX/isohdpfx.bin" ]] && die "💥 isolinux is not installed."
 log "👍 All required utilities are installed."
 
 if [ ! -f "${source_iso}" ]; then
@@ -167,7 +167,8 @@ else
         log "🤞 Skipping verification of source ISO."
 fi
 log "🔧 Extracting ISO image..."
-7z -y x "${source_iso}" -o"$tmpdir" >/dev/null
+xorriso -osirrox on -indev "${source_iso}" -extract / "$tmpdir" &>/dev/null
+chmod -R u+w "$tmpdir"
 rm -rf "$tmpdir/"'[BOOT]'
 log "👍 Extracted to $tmpdir"
 
@@ -203,7 +204,7 @@ log "👍 Updated hashes."
 
 log "📦 Repackaging extracted files into an ISO image..."
 cd "$tmpdir"
-mkisofs -quiet -D -r -V "ubuntu-preseed-$today" -cache-inodes -J -l -b isolinux/isolinux.bin -c isolinux/boot.cat -no-emul-boot -boot-load-size 4 -boot-info-table -eltorito-alt-boot -e boot/grub/efi.img -no-emul-boot -o "${destination_iso}" .
+xorriso -as mkisofs -r -V "ubuntu-preseed-$today" -J -b isolinux/isolinux.bin -c isolinux/boot.cat -no-emul-boot -boot-load-size 4 -isohybrid-mbr /usr/lib/ISOLINUX/isohdpfx.bin -boot-info-table -input-charset utf-8 -eltorito-alt-boot -e boot/grub/efi.img -no-emul-boot -isohybrid-gpt-basdat -o "${destination_iso}" . &>/dev/null
 cd "$OLDPWD"
 log "👍 Repackaged into ${destination_iso}"
 
