@@ -18,6 +18,9 @@ Tested on a host running Ubuntu 20.04.1.
 - Utilities required:
     - ```p7zip-full```
     - ```mkisofs``` or ```genisoimage```
+    - ```xorriso```
+    - ```curl```
+    - ```isolinux```
 
 ### Usage
 ```
