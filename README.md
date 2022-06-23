@@ -27,19 +27,20 @@ Usage: ubuntu-preseed-iso-generator.sh [-h] [-k] [-v] [-p preseed-configuration-
 
 Available options:
 
--h, --help          Print this help and exit
--v, --verbose       Print script debug info
--p, --preseed       Path to preseed configuration file.
--k, --no-verify     Disable GPG verification of the source ISO file. By default SHA256SUMS-<current date> and
-                    SHA256SUMS-<current date>.gpg in <script directory> will be used to verify the authenticity and integrity
-                    of the source ISO file. If they are not present the latest daily SHA256SUMS will be
-                    downloaded and saved in <script directory>. The Ubuntu signing key will be downloaded and
-                    saved in a new keyring in <script directory>
--s, --source        Source ISO file. By default the latest daily ISO for Ubuntu 20.04 will be downloaded
-                    and saved as <script directory>/ubuntu-original-<current date>.iso
-                    That file will be used by default if it already exists.
--d, --destination   Destination ISO file. By default <script directory>/ubuntu-preseed-<current date>.iso will be
-                    created, overwriting any existing file.
+-h, --help              Print this help and exit
+-v, --verbose           Print script debug info
+-p, --preseed           Path to preseed configuration file.
+-k, --no-verify         Disable GPG verification of the source ISO file. By default SHA256SUMS-$today and
+                        SHA256SUMS-$today.gpg in ${script_dir} will be used to verify the authenticity and integrity
+                        of the source ISO file. If they are not present the latest daily SHA256SUMS will be
+                        downloaded and saved in ${script_dir}. The Ubuntu signing key will be downloaded and
+                        saved in a new keyring in ${script_dir}
+-a, --additional-files  Specifies an optional folder which contains additional files, which will be copied to the iso root
+-s, --source            Source ISO file. By default the latest daily ISO for Ubuntu 20.04 will be downloaded
+                        and saved as ${script_dir}/ubuntu-original-$today.iso
+                        That file will be used by default if it already exists.
+-d, --destination       Destination ISO file. By default ${script_dir}/ubuntu-preseed-$today.iso will be
+                        created, overwriting any existing file.
 ```
 
 ### Example

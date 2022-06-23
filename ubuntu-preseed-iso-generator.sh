@@ -33,19 +33,20 @@ Usage: $(basename "${BASH_SOURCE[0]}") [-h] [-k] [-v] [-p preseed-configuration-
 
 Available options:
 
--h, --help          Print this help and exit
--v, --verbose       Print script debug info
--p, --preseed       Path to preseed configuration file.
--k, --no-verify     Disable GPG verification of the source ISO file. By default SHA256SUMS-$today and
-                    SHA256SUMS-$today.gpg in ${script_dir} will be used to verify the authenticity and integrity
-                    of the source ISO file. If they are not present the latest daily SHA256SUMS will be
-                    downloaded and saved in ${script_dir}. The Ubuntu signing key will be downloaded and
-                    saved in a new keyring in ${script_dir}
--s, --source        Source ISO file. By default the latest daily ISO for Ubuntu 20.04 will be downloaded
-                    and saved as ${script_dir}/ubuntu-original-$today.iso
-                    That file will be used by default if it already exists.
--d, --destination   Destination ISO file. By default ${script_dir}/ubuntu-preseed-$today.iso will be
-                    created, overwriting any existing file.
+-h, --help              Print this help and exit
+-v, --verbose           Print script debug info
+-p, --preseed           Path to preseed configuration file.
+-k, --no-verify         Disable GPG verification of the source ISO file. By default SHA256SUMS-$today and
+                        SHA256SUMS-$today.gpg in ${script_dir} will be used to verify the authenticity and integrity
+                        of the source ISO file. If they are not present the latest daily SHA256SUMS will be
+                        downloaded and saved in ${script_dir}. The Ubuntu signing key will be downloaded and
+                        saved in a new keyring in ${script_dir}
+-a, --additional-files  Specifies an optional folder which contains additional files, which will be copied to the iso root
+-s, --source            Source ISO file. By default the latest daily ISO for Ubuntu 20.04 will be downloaded
+                        and saved as ${script_dir}/ubuntu-original-$today.iso
+                        That file will be used by default if it already exists.
+-d, --destination       Destination ISO file. By default ${script_dir}/ubuntu-preseed-$today.iso will be
+                        created, overwriting any existing file.
 EOF
         exit
 }
@@ -53,6 +54,7 @@ EOF
 function parse_params() {
         # default values of variables set from params
         preseed_file=""
+        additional_files_folder=""
         source_iso="${script_dir}/ubuntu-original-$today.iso"
         destination_iso="${script_dir}/ubuntu-preseed-$today.iso"
         gpg_verify=1
@@ -64,6 +66,10 @@ function parse_params() {
                 -k | --no-verify) gpg_verify=0 ;;
                 -p | --preseed)
                         preseed_file="${2-}"
+                        shift
+                        ;;
+                -a | --additional-files)
+                        additional_files_folder="${2-}"
                         shift
                         ;;
                 -s | --source)
@@ -192,6 +198,12 @@ log "👍 Added parameters to UEFI and BIOS kernel command lines."
 log "🧩 Adding preseed configuration file..."
 cp "$preseed_file" "$tmpdir/preseed/custom.seed"
 log "👍 Added preseed file"
+
+if [[ -n "$additional_files_folder" ]]; then
+  log "➕ Adding additional files to the iso image..."
+  cp -R "$additional_files_folder/." "$tmpdir/"
+  log "👍 Added additional files"
+fi
 
 log "👷 Updating $tmpdir/md5sum.txt with hashes of modified files..."
 # Using the full list of hashes causes long delays at boot.
